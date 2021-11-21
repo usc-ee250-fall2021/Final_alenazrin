@@ -10,9 +10,7 @@ from pynput import keyboard
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
-   
-    #subscribe to topics of interest here
-    
+       
 
 #Default message callback. Please use custom callbacks
 def on_message(client, userdata, msg):
