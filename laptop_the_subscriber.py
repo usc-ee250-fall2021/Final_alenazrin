@@ -11,11 +11,15 @@ def on_connect(client, userdata, flags, rc):
 
     #subscribe to the ultrasonic weather sensor topic here
     client.subscribe("alenazrin/weather_sensor")
-    client.message_callback_add("alenazrin/message_sensor", weather_sensor_callback)
+    client.message_callback_add("alenazrin/weather_sensor", weather_sensor_callback)
     
     #subscribe to the led topic
     client.subscribe("alenazrin/led")
     client.message_callback_add("alenazrin/led", led_callback)
+    
+    #subscribe to the led topic
+    client.subscribe("alenazrin/buzzer")
+    client.message_callback_add("alenazrin/buzzer", buzzer_callback)
     
 
 #Default message callback. Please use custom callbacks.
@@ -31,6 +35,11 @@ def led_callback(client, userdata, message):
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
     print("Weather sensor")
+    
+#buzzer callback
+def buzzer_callback(client, userdata, message):
+    #the third argument is 'message' here unlike 'msg' in on_message 
+    print("Buzzer!")
     
 if __name__ == '__main__':
     #this section is covered in publisher_and_subscriber_example.py
