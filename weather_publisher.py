@@ -8,33 +8,17 @@ import paho.mqtt.client as mqtt
 import time
 from pynput import keyboard
 
-# By appending the folder of all the GrovePi libraries to the system path here,
-# we are successfully `import grovepi`
-sys.path.append('../../Software/Python/')
-# This append is to support importing the LCD library.
-sys.path.append('../../Software/Python/grove_rgb_lcd')
-import grovepi
-from grove_rgb_lcd import *
-
-PORT1 = 2 #led
-PORT3 = 3 #weather 
-
-
-
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
-       
+   
+    #subscribe to topics of interest here
+    
 
 #Default message callback. Please use custom callbacks
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
     
-weather = grovepi.ultrasonicRead(PORT1)
-
-def weather_sensor(temp):
-    print()
-    client.publish("alena/weather_sensor", "w")
-    
+      
 def on_press(key):
     try: 
         k = key.char # single-char keys
@@ -45,6 +29,12 @@ def on_press(key):
         print("w")
         #send "w" character to rpi
         client.publish("alena/lcd", "w")
+    elif k == 'a':
+        print("a")
+        # send "a" character to rpi
+        client.publish("alena/lcd", "a")
+        #send "LED_ON"
+        client.publish("alena/led", "LED_ON")
     elif k == 's':
         print("s")
         # send "s" character to rpi
@@ -69,12 +59,5 @@ if __name__ == '__main__':
     client.loop_start()
 
     while True:
-        # read the weather value
-        weather = grovepi.ultrasonicRead(PORT3)
-        client.publish("alena/weather_sensor", weather)
-        button = grovepi.digitalRead(PORT3)
-        if button == 1:
-            client.publish("alena/button", button)
-        
-        
+        #print("delete this line")
         time.sleep(1)
