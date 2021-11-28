@@ -46,7 +46,7 @@ def weather_sensor_callback(client, userdata, message):
     print("Weather from the sensor: " + str(message.payload, 'utf-8') + "F")
     temp = str(message.payload, 'utf-8')
     setText_norefresh(temp) # output to the lcd screen
-    difference = server_weather - temp
+    difference = (int)server_weather - (int)temp
     if difference < 0:
         difference = difference*-1
     
