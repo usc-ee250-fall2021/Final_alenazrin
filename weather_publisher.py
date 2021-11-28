@@ -8,6 +8,13 @@ import paho.mqtt.client as mqtt
 import time
 from pynput import keyboard
 
+import requests
+
+# OpenWeatherMap API: https://openweathermap.org/current
+
+# Sign up for an API key
+OWM_API_KEY = '7739ee4718f1d8cd3b44c2a8248ad2e3'  # OpenWeatherMap API Key
+
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
        
@@ -17,38 +24,30 @@ def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
     
       
-def on_press(key):
-    try: 
-        k = key.char # single-char keys
-    except: 
-        k = key.name # other keys
+def get_weather():
+    params = {
+        'appid': OWM_API_KEY,
+        # TODO: referencing the API documentation, add the missing parameters for zip code and units (Fahrenheit)
+        'zip': 90089,  #zip code
+        'units': 'imperial'  #unit Fahrenheit
+    }
     
-    if k == 'w':
-        print("w")
-        #send "w" character to rpi
-        client.publish("alena/lcd", "w")
-    elif k == 'a':
-        print("a")
-        # send "a" character to rpi
-        client.publish("alena/lcd", "a")
-        #send "LED_ON"
-        client.publish("alena/led", "LED_ON")
-    elif k == 's':
-        print("s")
-        # send "s" character to rpi
-        client.publish("alena/lcd", "s")
-    elif k == 'd':
-        print("d")
-        # send "d" character to rpi
-        client.publish("alena/lcd", "d")
-        # send "LED_OFF"
-        client.publish("alena/led", "LED_OFF")
+    response = requests.get('http://api.openweathermap.org/data/2.5/weather', params)
+
+    if response.status_code == 200: # Status: OK
+        data = response.json()
+
+        #TODO: Extract the temperature & humidity from data, and return as a tuple
+        temp = data["main"]["temp"]  #extract temp
+        hum = data["main"]["humidity"]  #extract humidity
+        return temp
+
+    else:
+        print('error: got response code %d' % response.status_code)
+        print(response.text)
+        return 0.0, 0.0
 
 if __name__ == '__main__':
-    #setup the keyboard event listener
-    lis = keyboard.Listener(on_press=on_press)
-    lis.start() # start to listen on a separate thread
-
     #this section is covered in publisher_and_subscriber_example.py
     client = mqtt.Client()
     client.on_message = on_message
@@ -58,4 +57,7 @@ if __name__ == '__main__':
 
     while True:
         #print("delete this line")
+        # get the temparature
+        temp = get_weather()
+        client.publish("alenazrin/server_weather", temp)
         time.sleep(1)
