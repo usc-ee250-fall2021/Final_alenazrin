@@ -16,6 +16,7 @@ from grove_rgb_lcd import *
 PORT1 = 2 #led
 PORT2 = 4 #ultrasonic ranger
 PORT3 = 3 #button 
+dht_sensor_port = 7 #temp sensor
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -39,6 +40,8 @@ def led_callback(client, userdata, message):
     elif str(message.payload, 'utf-8') == "LED_OFF":
         #print("got it")
         grovepi.digitalWrite(PORT1, 0)
+        
+    
         
 # custom callback function for lcd callback
 def lcd_callback(client, userdata, message):
@@ -69,6 +72,9 @@ if __name__ == '__main__':
         # read the ultrasonic value
         ultrasonic = grovepi.ultrasonicRead(PORT2)
         client.publish("alena/ultrasonicRanger", ultrasonic)
+        # read the temperature
+        [ temp, hum ] = dht(dht_sensor_port, 1)
+        client.publish("alenazrin/weather_sensor", temp)
         #read button pressed/not pressed
         button = grovepi.digitalRead(PORT3)
         if button == 1:
