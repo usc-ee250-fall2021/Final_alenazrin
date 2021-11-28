@@ -6,12 +6,21 @@
 import paho.mqtt.client as mqtt
 import time
 
+server_weather = 0
+
+RED_LED = 1
+GREEN_LED = 3
+
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
-    #subscribe to the ultrasonic weather sensor topic here
+    #subscribe to the weather sensor topic here
     client.subscribe("alenazrin/weather_sensor")
     client.message_callback_add("alenazrin/weather_sensor", weather_sensor_callback)
+    
+    #subscribe to the weather from the server
+    client.subscribe("alenazrin/weather_server")
+    client.message_callback_add("alenazrin/weather_server", weather_server_callback)
     
     #subscribe to the led topic
     client.subscribe("alenazrin/led")
@@ -34,9 +43,27 @@ def led_callback(client, userdata, message):
 #button callback
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
-    print("Weather: " + str(message.payload, 'utf-8') + "F")
+    print("Weather from the sensor: " + str(message.payload, 'utf-8') + "F")
     temp = str(message.payload, 'utf-8')
-    setText(temp) # output to the lcd screen
+    setText_norefresh(temp) # output to the lcd screen
+    difference = server_weather - temp
+    if difference < 0:
+        difference = difference*-1
+    
+    if difference > 3:
+        grovepi.digitalWrite(RED_LED, 1) #light up the led
+        setRGB(255, 0, 0) #red lcd
+        # ADD BUZZER?
+    else:
+        grovepi.digitalWrite(GREEN_LED, 1)
+        setRGB(0, 255, 0) #green lcd
+        # ADD BUZZER?
+        
+    
+#button callback
+def weather_server_callback(client, userdata, message):
+    print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
+    server_weather = str(message.payload, 'utf-8') #set the var
     
 #buzzer callback
 def buzzer_callback(client, userdata, message):
