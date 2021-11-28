@@ -34,7 +34,9 @@ def led_callback(client, userdata, message):
 #button callback
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
-    print("Weather sensor")
+    print("Weather: " + str(message.payload, 'utf-8') + "F")
+    temp = str(message.payload, 'utf-8')
+    setText(temp) # output to the lcd screen
     
 #buzzer callback
 def buzzer_callback(client, userdata, message):
