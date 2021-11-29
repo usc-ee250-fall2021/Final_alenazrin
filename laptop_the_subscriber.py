@@ -5,11 +5,25 @@
 
 import paho.mqtt.client as mqtt
 import time
+import sys
+import time
+# By appending the folder of all the GrovePi libraries to the system path here,
+# we are successfully `import grovepi`
+sys.path.append('../../Software/Python/')
+# This append is to support importing the LCD library.
+sys.path.append('../../Software/Python/grove_rgb_lcd')
+
+import grovepi
+
+from grove_rgb_lcd import *
 
 server_weather = 0
 
 RED_LED = 1
 GREEN_LED = 3
+BUZZER_PIN = 2
+
+pinMode(BUZZER_PIN, output)
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -54,10 +68,12 @@ def weather_sensor_callback(client, userdata, message):
         grovepi.digitalWrite(RED_LED, 1) #light up the led
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
+        digitalWrite(BUZZER_PIN, 1)
     else:
         grovepi.digitalWrite(GREEN_LED, 1)
         setRGB(0, 255, 0) #green lcd
         # ADD BUZZER?
+        digitalWrite(BUZZER_PIN, 0)
         
     
 #button callback
