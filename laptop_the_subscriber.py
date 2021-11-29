@@ -23,8 +23,32 @@ RED_LED = 1
 GREEN_LED = 3
 BUZZER_PIN = 2
 
+''' Buzzer stuff '''
+
+int length = 16;         #the number of notes 
+int tones[] = { 2673, 2349, 2093, 2349, 2673, 0, 2673, 0, 2673, 2349, 2349, 0, 2349, 2673, 3136, 0 }; #mary had a little lamb lol
+int beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1 };
+int tempo = 400;
+
+''' end '''
+
 pinMode(BUZZER_PIN, output)
 
+def play_song():
+    for i in range (length):
+         if tones[i] == 0:
+            delay(beats[i] * tempo);
+         else:
+            play_note(tones[i], beats[i] * tempo)
+            
+def play_note(tone, duration):
+    for i in range (duration * 1000):
+        digitalWrite(BUZZER_PIN, HIGH);
+        delayMicroseconds(tone);
+        digitalWrite(BUZZER_PIN, LOW);
+        delayMicroseconds(tone);
+        i = i+tone*2
+    
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -74,6 +98,9 @@ def weather_sensor_callback(client, userdata, message):
         setRGB(0, 255, 0) #green lcd
         # ADD BUZZER?
         digitalWrite(BUZZER_PIN, 0)
+        
+    if temp < 70:
+        play_song() # if cold, play Mary
         
     
 #button callback
