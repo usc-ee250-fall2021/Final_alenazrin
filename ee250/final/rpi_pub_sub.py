@@ -20,7 +20,7 @@ dht_sensor_port = 4 #temp sensor
 server_weather = 0
 
 RED_LED = 3
-GREEN_LED = 0
+GREEN_LED = 7
 BUZZER_PIN = 2
 
 ''' Buzzer stuff '''
@@ -81,7 +81,7 @@ def weather_sensor_callback(client, userdata, message):
     temp = float(str(message.payload, 'utf-8'))
     temp = temp*(9/5) + 32 # in F
     print("Weather from the sensor: " + str(temp) + "F")
-    setText_norefresh(str(temp)) # output to the lcd screen
+    setText_norefresh(str(int(temp))) # output to the lcd screen
     difference = float(server_weather) - float(temp)
     if difference < 0:
         difference = difference*-1
@@ -106,6 +106,7 @@ def weather_sensor_callback(client, userdata, message):
 #button callback
 def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
+    setText_norefresh("              " + str(message.payload, 'utf-8')) # output to the lcd screen
     server_weather = str(message.payload, 'utf-8') #set the var
     
 '''  
