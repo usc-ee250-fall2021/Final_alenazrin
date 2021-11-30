@@ -30,7 +30,7 @@ tempo = 400;
 
 ''' end '''
 
-pinMode(BUZZER_PIN, output)
+#pinMode(BUZZER_PIN, output)
 
 def play_song():
     for i in range (length):
@@ -134,16 +134,9 @@ if __name__ == '__main__':
 
     while True:
         #print("delete this line")
-        # read the ultrasonic value
-        ultrasonic = grovepi.ultrasonicRead(PORT2)
-        client.publish("alena/ultrasonicRanger", ultrasonic)
         # read the temperature
         [ temp, hum ] = dht(dht_sensor_port, 1)
         client.publish("alenazrin/weather_sensor", temp)
         #read button pressed/not pressed
-        button = grovepi.digitalRead(PORT3)
-        if button == 1:
-            client.publish("alena/button", button)
-        
         
         time.sleep(1)
