@@ -99,7 +99,7 @@ def weather_sensor_callback(client, userdata, message):
         grovepi.digitalWrite(BUZZER_PIN, 0)
         
     if float(temp) < 70:
-        play_song() # if cold, play Mary
+        #play_song() # if cold, play Mary
         
     
 #button callback
