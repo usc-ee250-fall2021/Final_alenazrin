@@ -43,9 +43,9 @@ def play_song():
             
 def play_note(tone, duration):
     for i in range (duration * 1000):
-        digitalWrite(BUZZER_PIN, HIGH)
+        grovepi.digitalWrite(BUZZER_PIN, HIGH)
         delayMicroseconds(tone)
-        digitalWrite(BUZZER_PIN, LOW)
+        grovepi.digitalWrite(BUZZER_PIN, LOW)
         delayMicroseconds(tone)
         i = i+tone*2
     
