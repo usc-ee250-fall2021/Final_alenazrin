@@ -13,41 +13,12 @@ sys.path.append('../../Software/Python/')
 # This append is to support importing the LCD library.
 sys.path.append('../../Software/Python/grove_rgb_lcd')
 
-#import grovepi
+import grovepi
 
-#from grove_rgb_lcd import *
+from grove_rgb_lcd import *
 
 server_weather = 0
 
-RED_LED = 1
-GREEN_LED = 3
-BUZZER_PIN = 2
-
-''' Buzzer stuff '''
-
-length = 16;         #the number of notes 
-#tones[] = { 2673, 2349, 2093, 2349, 2673, 0, 2673, 0, 2673, 2349, 2349, 0, 2349, 2673, 3136, 0 }; #mary had a little lamb lol
-#beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1 };
-tempo = 400;
-
-''' end '''
-
-pinMode(BUZZER_PIN, output)
-
-def play_song():
-    for i in range (length):
-         if tones[i] == 0:
-            delay(beats[i] * tempo);
-         else:
-            play_note(tones[i], beats[i] * tempo)
-            
-def play_note(tone, duration):
-    for i in range (duration * 1000):
-        digitalWrite(BUZZER_PIN, HIGH);
-        delayMicroseconds(tone);
-        digitalWrite(BUZZER_PIN, LOW);
-        delayMicroseconds(tone);
-        i = i+tone*2
     
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -82,25 +53,7 @@ def led_callback(client, userdata, message):
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
     print("Weather from the sensor: " + str(message.payload, 'utf-8') + "F")
-    temp = str(message.payload, 'utf-8')
-    setText_norefresh(temp) # output to the lcd screen
-    difference = int(server_weather) - int(temp)
-    if difference < 0:
-        difference = difference*-1
-    
-    if difference > 3:
-        grovepi.digitalWrite(RED_LED, 1) #light up the led
-        setRGB(255, 0, 0) #red lcd
-        # ADD BUZZER?
-        digitalWrite(BUZZER_PIN, 1)
-    else:
-        grovepi.digitalWrite(GREEN_LED, 1)
-        setRGB(0, 255, 0) #green lcd
-        # ADD BUZZER?
-        digitalWrite(BUZZER_PIN, 0)
-        
-    if temp < 70:
-        play_song() # if cold, play Mary
+
         
     
 #button callback
