@@ -105,7 +105,7 @@ def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
     server_weather = str(message.payload, 'utf-8') #set the var
     
-   ''' 
+  
 # custom callback function for led callback
 def led_callback(client, userdata, message):
     print(str(message.payload, 'utf-8'))
