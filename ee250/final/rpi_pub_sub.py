@@ -26,8 +26,8 @@ BUZZER_PIN = 2
 ''' Buzzer stuff '''
 
 length = 16;         #the number of notes 
-#tones[] = { 2673, 2349, 2093, 2349, 2673, 0, 2673, 0, 2673, 2349, 2349, 0, 2349, 2673, 3136, 0 }; #mary had a little lamb lol
-#beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1 };
+tones[] = { 2673, 2349, 2093, 2349, 2673, 0, 2673, 0, 2673, 2349, 2349, 0, 2349, 2673, 3136, 0 } #mary had a little lamb lol
+beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1 }
 tempo = 400;
 
 ''' end '''
@@ -37,16 +37,16 @@ grovepi.pinMode(BUZZER_PIN, 1)
 def play_song():
     for i in range (length):
          if tones[i] == 0:
-            delay(beats[i] * tempo);
+            delay(beats[i] * tempo)
          else:
             play_note(tones[i], beats[i] * tempo)
             
 def play_note(tone, duration):
     for i in range (duration * 1000):
-        digitalWrite(BUZZER_PIN, HIGH);
-        delayMicroseconds(tone);
-        digitalWrite(BUZZER_PIN, LOW);
-        delayMicroseconds(tone);
+        digitalWrite(BUZZER_PIN, HIGH)
+        delayMicroseconds(tone)
+        digitalWrite(BUZZER_PIN, LOW)
+        delayMicroseconds(tone)
         i = i+tone*2
     
 def on_connect(client, userdata, flags, rc):
