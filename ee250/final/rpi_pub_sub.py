@@ -37,16 +37,16 @@ grovepi.pinMode(BUZZER_PIN, 1)
 def play_song():
     for i in range (length):
          if tones[i] == 0:
-            delay(beats[i] * tempo)
+            time.sleep(beats[i] * tempo / 1000)
          else:
             play_note(tones[i], beats[i] * tempo)
             
 def play_note(tone, duration):
     for i in range (duration * 1000):
         grovepi.digitalWrite(BUZZER_PIN, 1)
-        delayMicroseconds(tone)
+        usleep(tone)
         grovepi.digitalWrite(BUZZER_PIN, 0)
-        delayMicroseconds(tone)
+        usleep(tone)
         i = i+tone*2
     
 def on_connect(client, userdata, flags, rc):
