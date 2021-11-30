@@ -80,7 +80,7 @@ def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
     temp = float(str(message.payload, 'utf-8'))
     temp = temp*(9/5) + 32 # in F
-    print("Weather from the sensor: " + str(message.payload, 'utf-8') + "F")
+    print("Weather from the sensor: " + str(temp) + "F")
     setText_norefresh(str(temp)) # output to the lcd screen
     difference = float(server_weather) - float(temp)
     if difference < 0:
