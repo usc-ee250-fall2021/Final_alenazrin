@@ -51,7 +51,7 @@ import math
 import struct
 import numpy
 
-#import di_i2c
+import di_i2c
 
 def set_bus(bus):
 	global i2c
