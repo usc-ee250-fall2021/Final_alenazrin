@@ -16,6 +16,7 @@ sys.path.append('../Software/Python/grove_rgb_lcd')
 import grovepi
 
 from grove_rgb_lcd import *
+import di_i2c
 
 server_weather = 0
 
