@@ -133,7 +133,7 @@ if __name__ == '__main__':
     while True:
         #print("delete this line")
         # read the temperature
-        [ temp, hum ] = dht(dht_sensor_port, 4)
+        [ temp, hum ] = dht(dht_sensor_port, 1)
         client.publish("alenazrin/weather_sensor", temp)
         #read button pressed/not pressed
         
