@@ -59,5 +59,5 @@ if __name__ == '__main__':
         #print("delete this line")
         # get the temparature
         temp = get_weather()
-        client.publish("alenazrin/server_weather", temp)
+        client.publish("alenazrin/weather_server", temp)
         time.sleep(1)
