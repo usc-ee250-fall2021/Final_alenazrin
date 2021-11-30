@@ -32,7 +32,7 @@ tempo = 400;
 
 ''' end '''
 
-#pinMode(BUZZER_PIN, output)
+grovepi.pinMode(BUZZER_PIN, 1)
 
 def play_song():
     for i in range (length):
