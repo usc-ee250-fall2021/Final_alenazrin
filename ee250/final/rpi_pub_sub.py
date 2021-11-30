@@ -78,8 +78,9 @@ def led_callback(client, userdata, message):
 #button callback
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
-    print("Weather from the sensor: " + str(message.payload, 'utf-8') + "F")
     temp = str(message.payload, 'utf-8')
+    temp = temp*(9/5) + 32 # in F
+    print("Weather from the sensor: " + str(message.payload, 'utf-8') + "F")
     setText_norefresh(temp) # output to the lcd screen
     difference = float(server_weather) - float(temp)
     if difference < 0:
@@ -98,7 +99,7 @@ def weather_sensor_callback(client, userdata, message):
         # ADD BUZZER?
         grovepi.digitalWrite(BUZZER_PIN, 0)
         
-    if float(temp) < 70:
+    #if float(temp) < 70:
         #play_song() # if cold, play Mary
         
     
