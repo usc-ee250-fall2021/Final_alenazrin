@@ -13,10 +13,9 @@ sys.path.append('../../Software/Python/')
 # This append is to support importing the LCD library.
 sys.path.append('../../Software/Python/grove_rgb_lcd')
 
-import grovepi
+#import grovepi
 
-from grove_rgb_lcd import *
-import di_i2c
+#from grove_rgb_lcd import *
 
 server_weather = 0
 
