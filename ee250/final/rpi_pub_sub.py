@@ -44,9 +44,9 @@ def play_song():
 def play_note(tone, duration):
     for i in range (duration * 1000):
         grovepi.digitalWrite(BUZZER_PIN, 1)
-        usleep(tone)
+        time.sleep(tone/1000000)
         grovepi.digitalWrite(BUZZER_PIN, 0)
-        usleep(tone)
+        time.sleep(tone/1000000)
         i = i+tone*2
     
 def on_connect(client, userdata, flags, rc):
