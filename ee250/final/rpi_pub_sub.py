@@ -13,15 +13,12 @@ sys.path.append('../../Software/Python/grove_rgb_lcd')
 import grovepi
 from grove_rgb_lcd import *
 
-PORT1 = 2 #led
-PORT2 = 4 #ultrasonic ranger
-PORT3 = 3 #button 
-dht_sensor_port = 7 #temp sensor
+dht_sensor_port = 4 #temp sensor
 
 server_weather = 0
 
-RED_LED = 1
-GREEN_LED = 3
+RED_LED = 3
+GREEN_LED = 0
 BUZZER_PIN = 2
 
 ''' Buzzer stuff '''
