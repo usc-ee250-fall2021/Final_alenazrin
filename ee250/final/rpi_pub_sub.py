@@ -90,13 +90,15 @@ def weather_sensor_callback(client, userdata, message):
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
         grovepi.digitalWrite(BUZZER_PIN, 1)
+        time.sleep(2)
+        grovepi.digitalWrite(BUZZER_PIN, 0)
     else:
         grovepi.digitalWrite(GREEN_LED, 1)
         setRGB(0, 255, 0) #green lcd
         # ADD BUZZER?
         grovepi.digitalWrite(BUZZER_PIN, 0)
         
-    if temp < 70:
+    if float(temp) < 70:
         play_song() # if cold, play Mary
         
     
