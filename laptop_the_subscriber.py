@@ -25,10 +25,10 @@ BUZZER_PIN = 2
 
 ''' Buzzer stuff '''
 
-int length = 16;         #the number of notes 
-int tones[] = { 2673, 2349, 2093, 2349, 2673, 0, 2673, 0, 2673, 2349, 2349, 0, 2349, 2673, 3136, 0 }; #mary had a little lamb lol
-int beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1 };
-int tempo = 400;
+length = 16;         #the number of notes 
+tones[] = { 2673, 2349, 2093, 2349, 2673, 0, 2673, 0, 2673, 2349, 2349, 0, 2349, 2673, 3136, 0 }; #mary had a little lamb lol
+beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1 };
+tempo = 400;
 
 ''' end '''
 
