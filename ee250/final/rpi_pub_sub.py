@@ -86,7 +86,7 @@ def weather_sensor_callback(client, userdata, message):
     if difference < 0:
         difference = difference*-1
     
-    if difference > 3:
+    if difference > 5:
         grovepi.digitalWrite(RED_LED, 1) #light up the led
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
