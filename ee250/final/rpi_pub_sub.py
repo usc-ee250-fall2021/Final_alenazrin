@@ -107,7 +107,7 @@ def weather_sensor_callback(client, userdata, message):
 def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
     output = "\n" + str(message.payload, 'utf-8')
-    setText_norefresh(output) # output to the lcd screen
+    setText_norefresh("C\n" + str(message.payload, 'utf-8')) # output to the lcd screen
     server_weather = str(message.payload, 'utf-8') #set the var
     
 '''  
