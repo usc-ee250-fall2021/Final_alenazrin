@@ -17,7 +17,7 @@ from grove_rgb_lcd import *
 
 dht_sensor_port = 4 #temp sensor
 
-global server_weather = 0
+global server_weather 
 
 RED_LED = 3
 GREEN_LED = 7
