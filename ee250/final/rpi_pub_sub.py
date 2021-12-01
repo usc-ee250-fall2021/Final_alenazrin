@@ -134,7 +134,8 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
     client.loop_start()
-    global server_weather = 0;
+    global server_weather
+    server_weather = 0;
 
     while True:
         #print("delete this line")
