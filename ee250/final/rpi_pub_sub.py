@@ -25,7 +25,7 @@ GREEN_LED = 7
 BUZZER_PIN = 2
 
 server_weather = 0;
-temp = 0;
+temp = 0.0;
 
 ''' Buzzer stuff '''
 
