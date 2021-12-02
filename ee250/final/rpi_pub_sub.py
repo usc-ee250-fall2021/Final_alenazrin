@@ -152,7 +152,7 @@ if __name__ == '__main__':
         # read the temperature
         with lock:
             [ temperature, hum ] = dht(dht_sensor_port, 0)
-        client.publish("alenazrin/weather_sensor", temp)
+        client.publish("alenazrin/weather_sensor", temperature)
       
         with lock:
             setText("Sensor: " + str(temp) + "\nServer: " + str(server_weather))
