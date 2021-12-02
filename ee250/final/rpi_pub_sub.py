@@ -155,6 +155,6 @@ if __name__ == '__main__':
         client.publish("alenazrin/weather_sensor", temperature)
       
         with lock:
-            setText_norefresh("Sensor: " + str(temp) + "F\nServer: " + str(server_weather) + "F")
+            setText("Sensor: " + str(temp) + "F\nServer: " + str(server_weather) + "F")
         
         time.sleep(1)
