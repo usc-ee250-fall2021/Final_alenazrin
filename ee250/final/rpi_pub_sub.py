@@ -83,8 +83,7 @@ def led_callback(client, userdata, message):
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
     
-    temperature = float(str(message.payload, 'utf-8'))
-    temperature = temperature*(9/5) + 32 # in F
+    temperature = float(str(message.payload, 'utf-8'))*(9/5) + 32
     global temp
     temp = str(temperature)
  
