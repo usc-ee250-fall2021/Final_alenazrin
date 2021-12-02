@@ -14,6 +14,8 @@ import grovepi
 from grovepi import dht
 from grove_rgb_lcd import *
 
+import threading
+lock = threading.Lock()
 
 dht_sensor_port = 4 #temp sensor
 
@@ -82,24 +84,30 @@ def weather_sensor_callback(client, userdata, message):
     temp = float(str(message.payload, 'utf-8'))
     temp = temp*(9/5) + 32 # in F
     print("Weather from the sensor: " + str(temp) + "F")
-    setText(str(temp)) # output to the lcd screen
+    with lock 
+        setText(str(temp)) # output to the lcd screen
     difference = float(server_weather) - float(temp)
     #print("server weather value" + str(server_weather))
     if difference < 0:
         difference = difference*-1
     
     if difference > 30:
-        grovepi.digitalWrite(RED_LED, 1) #light up the led
+        with lock
+            grovepi.digitalWrite(RED_LED, 1) #light up the led
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
-        grovepi.digitalWrite(BUZZER_PIN, 1)
+        with lock
+            grovepi.digitalWrite(BUZZER_PIN, 1)
         time.sleep(2)
-        grovepi.digitalWrite(BUZZER_PIN, 0)
+        with lock
+            grovepi.digitalWrite(BUZZER_PIN, 0)
     else:
-        grovepi.digitalWrite(GREEN_LED, 1)
+        with lock
+            grovepi.digitalWrite(GREEN_LED, 1)
         setRGB(0, 255, 0) #green lcd
         # ADD BUZZER?
-        grovepi.digitalWrite(BUZZER_PIN, 0)
+        with lock
+            grovepi.digitalWrite(BUZZER_PIN, 0)
         
     #if float(temp) < 70:
         #play_song() # if cold, play Mary
@@ -109,7 +117,8 @@ def weather_sensor_callback(client, userdata, message):
 def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
     output = "\n" + str(message.payload, 'utf-8')
-    setText_norefresh(str(message.payload, 'utf-8')) # output to the lcd screen
+    with lock
+        setText_norefresh(str(message.payload, 'utf-8')) # output to the lcd screen
     global server_weather
     server_weather = float(str(message.payload, 'utf-8')) #set the var
     
