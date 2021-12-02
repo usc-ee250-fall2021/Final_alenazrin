@@ -25,6 +25,7 @@ GREEN_LED = 7
 BUZZER_PIN = 2
 
 server_weather = 0;
+temp = 0;
 
 ''' Buzzer stuff '''
 
@@ -81,11 +82,11 @@ def led_callback(client, userdata, message):
 #button callback
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
+    global temp
     temp = float(str(message.payload, 'utf-8'))
     temp = temp*(9/5) + 32 # in F
+    temp = str(temp)
     print("Weather from the sensor: " + str(temp) + "F")
-    with lock: 
-        setText(str(temp)) # output to the lcd screen
     difference = float(server_weather) - float(temp)
     #print("server weather value" + str(server_weather))
     if difference < 0:
@@ -116,11 +117,8 @@ def weather_sensor_callback(client, userdata, message):
 #button callback
 def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
-    output = "\n" + str(message.payload, 'utf-8')
-    with lock:
-        setText_norefresh(str(message.payload, 'utf-8')) # output to the lcd screen
     global server_weather
-    server_weather = float(str(message.payload, 'utf-8')) #set the var
+    server_weather = str(message.payload, 'utf-8')) #set the var
     
 '''  
 # custom callback function for led callback
@@ -153,6 +151,7 @@ if __name__ == '__main__':
         with lock:
             [ temp, hum ] = dht(dht_sensor_port, 0)
         client.publish("alenazrin/weather_sensor", temp)
-        #read button pressed/not pressed
+        with lock:
+            setText_norefresh("Weather from the sensor: " + temp + "\nWeather from the server: " + server_weather)
         
         time.sleep(1)
