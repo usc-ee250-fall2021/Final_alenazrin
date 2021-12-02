@@ -152,6 +152,6 @@ if __name__ == '__main__':
             [ temp, hum ] = dht(dht_sensor_port, 0)
         client.publish("alenazrin/weather_sensor", temp)
         with lock:
-            setText_norefresh("Weather from the sensor: " + temp + "\nWeather from the server: " + server_weather)
+            setText_norefresh("Weather from the sensor: " + str(temp) + "\nWeather from the server: " + str(server_weather))
         
         time.sleep(1)
