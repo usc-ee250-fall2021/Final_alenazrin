@@ -82,9 +82,10 @@ def led_callback(client, userdata, message):
 #button callback
 def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
+    
+    temperature = float(str(message.payload, 'utf-8'))
     global temp
-    temp = float(str(message.payload, 'utf-8'))
-    temp = temp*(9/5) + 32 # in F
+    temp = temperature*(9/5) + 32 # in F
  
     print("Weather from the sensor: " + str(temp) + "F")
     difference = float(server_weather) - float(temp)
@@ -144,6 +145,7 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
     client.loop_start()
+    setText(" ")
 
     while True:
         #print("delete this line")
@@ -151,6 +153,7 @@ if __name__ == '__main__':
         with lock:
             [ temp, hum ] = dht(dht_sensor_port, 0)
         client.publish("alenazrin/weather_sensor", temp)
+      
         with lock:
             setText_norefresh("Sensor: " + str(temp) + "\nServer: " + str(server_weather))
         
