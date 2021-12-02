@@ -24,8 +24,8 @@ RED_LED = 3
 GREEN_LED = 7
 BUZZER_PIN = 2
 
-server_weather = 0;
-temp = 0.0;
+server_weather = 0
+temp = 0
 
 ''' Buzzer stuff '''
 
@@ -84,8 +84,9 @@ def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
     
     temperature = float(str(message.payload, 'utf-8'))
+    temperature = temperature*(9/5) + 32 # in F
     global temp
-    temp = temperature*(9/5) + 32 # in F
+    temp = str(temperature)
  
     print("Weather from the sensor: " + str(temp) + "F")
     difference = float(server_weather) - float(temp)
