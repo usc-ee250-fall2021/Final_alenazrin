@@ -84,8 +84,9 @@ def weather_sensor_callback(client, userdata, message):
     #the third argument is 'message' here unlike 'msg' in on_message 
     global temp
     temp = float(str(message.payload, 'utf-8'))
+    global temp
     temp = temp*(9/5) + 32 # in F
-    temp = str(temp)
+ 
     print("Weather from the sensor: " + str(temp) + "F")
     difference = float(server_weather) - float(temp)
     #print("server weather value" + str(server_weather))
@@ -152,6 +153,6 @@ if __name__ == '__main__':
             [ temp, hum ] = dht(dht_sensor_port, 0)
         client.publish("alenazrin/weather_sensor", temp)
         with lock:
-            setText_norefresh("Weather from the sensor: " + str(temp) + "\nWeather from the server: " + str(server_weather))
+            setText_norefresh("Sensor: " + str(temp) + "\nServer: " + str(server_weather))
         
         time.sleep(1)
