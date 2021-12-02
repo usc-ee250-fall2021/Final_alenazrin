@@ -22,6 +22,8 @@ RED_LED = 3
 GREEN_LED = 7
 BUZZER_PIN = 2
 
+server_weather = 0;
+
 ''' Buzzer stuff '''
 
 length = 16;         #the number of notes 
@@ -108,6 +110,7 @@ def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
     output = "\n" + str(message.payload, 'utf-8')
     setText_norefresh(str(message.payload, 'utf-8')) # output to the lcd screen
+    global server_weather
     server_weather = float(str(message.payload, 'utf-8')) #set the var
     
 '''  
@@ -134,8 +137,6 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
     client.loop_start()
-    global server_weather
-    server_weather = 0;
 
     while True:
         #print("delete this line")
