@@ -84,7 +84,7 @@ def weather_sensor_callback(client, userdata, message):
     temp = float(str(message.payload, 'utf-8'))
     temp = temp*(9/5) + 32 # in F
     print("Weather from the sensor: " + str(temp) + "F")
-    with lock 
+    with lock: 
         setText(str(temp)) # output to the lcd screen
     difference = float(server_weather) - float(temp)
     #print("server weather value" + str(server_weather))
@@ -92,21 +92,21 @@ def weather_sensor_callback(client, userdata, message):
         difference = difference*-1
     
     if difference > 30:
-        with lock
+        with lock:
             grovepi.digitalWrite(RED_LED, 1) #light up the led
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
-        with lock
+        with lock:
             grovepi.digitalWrite(BUZZER_PIN, 1)
         time.sleep(2)
-        with lock
+        with lock:
             grovepi.digitalWrite(BUZZER_PIN, 0)
     else:
-        with lock
+        with lock:
             grovepi.digitalWrite(GREEN_LED, 1)
         setRGB(0, 255, 0) #green lcd
         # ADD BUZZER?
-        with lock
+        with lock:
             grovepi.digitalWrite(BUZZER_PIN, 0)
         
     #if float(temp) < 70:
@@ -117,7 +117,7 @@ def weather_sensor_callback(client, userdata, message):
 def weather_server_callback(client, userdata, message):
     print("Weather from the server: " + str(message.payload, 'utf-8') + "F")
     output = "\n" + str(message.payload, 'utf-8')
-    with lock
+    with lock:
         setText_norefresh(str(message.payload, 'utf-8')) # output to the lcd screen
     global server_weather
     server_weather = float(str(message.payload, 'utf-8')) #set the var
@@ -150,7 +150,8 @@ if __name__ == '__main__':
     while True:
         #print("delete this line")
         # read the temperature
-        [ temp, hum ] = dht(dht_sensor_port, 0)
+        with lock:
+            [ temp, hum ] = dht(dht_sensor_port, 0)
         client.publish("alenazrin/weather_sensor", temp)
         #read button pressed/not pressed
         
