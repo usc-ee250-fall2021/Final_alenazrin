@@ -84,11 +84,11 @@ def weather_sensor_callback(client, userdata, message):
     print("Weather from the sensor: " + str(temp) + "F")
     setText(str(temp)) # output to the lcd screen
     difference = float(server_weather) - float(temp)
-    print("server weather value" + str(server_weather))
+    #print("server weather value" + str(server_weather))
     if difference < 0:
         difference = difference*-1
     
-    if difference > 5:
+    if difference > 30:
         grovepi.digitalWrite(RED_LED, 1) #light up the led
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
