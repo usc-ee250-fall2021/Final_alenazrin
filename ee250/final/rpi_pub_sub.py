@@ -96,6 +96,7 @@ def weather_sensor_callback(client, userdata, message):
     if difference > 5:
         with lock:
             grovepi.digitalWrite(RED_LED, 1) #light up the led
+            grovepi.digitalWrite(GREEN_LED, 0)
         setRGB(255, 0, 0) #red lcd
         # ADD BUZZER?
         with lock:
@@ -106,6 +107,7 @@ def weather_sensor_callback(client, userdata, message):
     else:
         with lock:
             grovepi.digitalWrite(GREEN_LED, 1)
+            grovepi.digitalWrite(RED_LED, 0)
         setRGB(0, 255, 0) #green lcd
         # ADD BUZZER?
         with lock:
