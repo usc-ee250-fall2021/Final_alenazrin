@@ -93,7 +93,7 @@ def weather_sensor_callback(client, userdata, message):
     if difference < 0:
         difference = difference*-1
     
-    if difference > 5:
+    if difference > 20:
         with lock:
             grovepi.digitalWrite(RED_LED, 1) #light up the led
             grovepi.digitalWrite(GREEN_LED, 0)
