@@ -1,6 +1,4 @@
-"""EE 250L Lab 05 Starter Code
-Run rpi_pub_and_sub.py on your Raspberry Pi."""
-# Github Repo: https://github.com/usc-ee250-fall2021/lab05-alenazrin/tree/lab05/ee250/lab05
+
 # Team Memebers: Alena Novikova, Azrin Khan
 import paho.mqtt.client as mqtt
 import sys
